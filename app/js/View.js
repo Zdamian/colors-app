@@ -20,6 +20,10 @@ var ListView = function(model, elements, selectors) {
     // Event powiadamiający kontroler, gdy został kliknięty element editButtonClicked
     this.editButtonClicked = new Event(this);
 
+    // Event powiadamiający kontroler,
+    // gdy został wciśnięty klawisz enter na elemencie input
+    this.inputEditEnterClicked = new Event(this);
+
     var _this = this;
 
     // Nasłuchiwanie na Zdarzenie (Event) emitowane przez model,
@@ -101,6 +105,19 @@ var ListView = function(model, elements, selectors) {
         _this.editButtonClicked.notify();
     });
 
+    // Przechwycenie zdarzenia wciśnięcia klawisza enter na elemncie input
+    this._elements.list.on('keyup', this._selectors.editInput, function(e) {
+        if (e.keyCode === 13) {
+
+            // Widok powiadamia (notify) kontroler,
+            // że klawisz enter zastał wciśnięty i w powiadomieniu wysyła
+            // wartość elementu input
+            _this.inputEditEnterClicked.notify({
+                color: _this._elements.list.find(_this._selectors.editInput).val().trim()
+            });
+        }
+    });
+
 };
 
 ListView.prototype = {
@@ -159,8 +176,12 @@ ListView.prototype = {
         var $editInput = $('<input type="text"class="app-edit-input" placeholder="" autofocus/>');
         var $itemEdit = list.find(this._selectors.editButton + ':eq(' + index + ')');
         var itemEditText = $itemEdit.text();
+        var len = itemEditText.length;
+        var colorName = itemEditText.slice(1, len)
 
-        $editInput.val(itemEditText).focus();
+        $editInput.val(colorName);
         $itemEdit.replaceWith($editInput);
+
+        this._elements.list.find(this._selectors.editInput).focus();
     },
 };

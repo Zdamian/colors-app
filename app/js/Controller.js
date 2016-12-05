@@ -1,26 +1,26 @@
 var ListController = function(model, view) {
-	this._model = model;
-	this._view = view;
+    this._model = model;
+    this._view = view;
 
-	var _this = this;
+    var _this = this;
 
-	// Nasłuchiwanie (przechwycenie) zdarzenia (Event) 
+    // Nasłuchiwanie (przechwycenie) zdarzenia (Event) 
     // najachenia kursora myszy na element z kolorem (hover)
-	this._view.listModified.attach(function(sender, args) {
+    this._view.listModified.attach(function(sender, args) {
 
-		// Wywołanie metody Kontrolera na przechwycone zdarzenie z argumentem
+        // Wywołanie metody Kontrolera na przechwycone zdarzenie z argumentem
         // wemitowanym przez to zdarzenie (listModified)
         _this.updateSelected(args.index);
     });
 
-	// Nasłuchiwanie (przechwycenie) zdarzenia (Event) 
+    // Nasłuchiwanie (przechwycenie) zdarzenia (Event) 
     // kliknięcia przycisku addButton
-	this._view.addButtonClicked.attach(function(sender, args) {
+    this._view.addButtonClicked.attach(function(sender, args) {
 
-		// Wywołanie metody Kontrolera na przechwycone zdarzenie z argumentem
+        // Wywołanie metody Kontrolera na przechwycone zdarzenie z argumentem
         // wemitowanym przez to zdarzenie (addButtonClicked)
-		_this.addcolor(args.color);
-	});
+        _this.addcolor(args.color);
+    });
 
     // Nasłuchiwanie (przechwycenie) zdarzenia (Event) 
     // wciśnięcia klawisza enter na elemencie input
@@ -48,18 +48,27 @@ var ListController = function(model, view) {
         // na przechwycone zdarzenie (editButtonClicked)
         _this.editColor();
     });
+
+    // Nasłuchiwanie (przechwycenie) zdarzenia (Event) 
+    // wciśnięcia klawisza enter na elemencie input
+    this._view.inputEditEnterClicked.attach(function(sender, args) {
+
+        // Wywołanie metody Kontrolera na przechwycone zdarzenie z argumentem
+        // wemitowanym przez to zdarzenie (inputEditEnterClicked)
+        _this.addEditcolor(args.color);
+    });
 }
 
 ListController.prototype = {
-	addcolor: function(color) {
+    addcolor: function(color) {
 
-		if (color) {
+        if (color) {
 
-			// Wywołanie metody Modelu addcolor i przekazanie jako argument
+            // Wywołanie metody Modelu addcolor i przekazanie jako argument
             // przechwyconej przez Widok wartości inputa
-			this._model.addcolor(color);
-		}
-	},
+            this._model.addcolor(color);
+        }
+    },
 
     delColor: function() {
         var index;
@@ -87,9 +96,25 @@ ListController.prototype = {
         }
     },
 
+    addEditcolor: function(color) {
+        var index;
+
+        // Przypisanie do zmiennej aktywnego elementu z kolorem
+        index = this._model.getSelectedIndex();
+        if (index !== -1) {
+
+            if (color) {
+
+                // Wywołanie metody Modelu addEditcolor i przekazanie jako argument
+                // przechwyconej przez Widok wartości inputa i indeks elementu
+                this._model.addEditcolor(color, this._model.getSelectedIndex());
+            }
+        }
+    },
+
     updateSelected: function(index) {
 
-    	// Wywołanie metody Modelu setSelectedIndex i przekazanie
+        // Wywołanie metody Modelu setSelectedIndex i przekazanie
         // jako argument indeks elementu z kolorem na jakim był hover
         this._model.setSelectedIndex(index);
     }
