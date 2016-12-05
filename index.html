@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Colors aplication</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/app/css/colors.css">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-md-offset-3 bg-primary">
+                    <h1 class="text-center">Colors app</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-md-offset-3 input-group form-group form-group-lg">
+                    <input type="text" id="formGroupInputLarge" class="app-input form-control input-lg" placeholder="" autofocus/>
+                    <span class="input-group-btn">
+                        <button type="submit" class="app-button btn btn-lg btn-primary">Add</button>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="row app-colors">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/node_modules/underscore/underscore-min.js"></script>
+        <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/app/js/Event.js"></script>
+        <script src="/app/js/Model.js"></script>
+        <script src="/app/js/View.js"></script>
+        <script src="/app/js/Controller.js"></script>
+        <script src="/app/js/App.js"></script>
+    </body>
+</html>
