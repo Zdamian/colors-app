@@ -1,37 +1,37 @@
 var ListModel = function(colors) {
-	this._colors = colors;
-	this._selectedIndex = -1;
+    this._colors = colors;
+    this._selectedIndex = -1;
 
-	// Zdarzenie (Event) emitowany do Widoku, że został dodany nowy kolor
-	this.colorAdded = new Event(this);
+    // Zdarzenie (Event) emitowany do Widoku, że został dodany nowy kolor
+    this.colorAdded = new Event(this);
 
-	// Zdarzenie (Event) emitowany do Widoku, że został usunięty kolor
+    // Zdarzenie (Event) emitowany do Widoku, że został usunięty kolor
     this.colorRemoved = new Event(this);
 
-	// Zdarzenie (Event) emitowany do Widoku, że został edytowany kolor
+    // Zdarzenie (Event) emitowany do Widoku, że został edytowany kolor
     this.editColor = new Event(this);
 }
 
 ListModel.prototype = {
-	getcolors: function() {
+    getcolors: function() {
 
-		// Zwraca tablicę kolorów
-		return [].concat(this._colors);
-	},
+        // Zwraca tablicę kolorów
+        return [].concat(this._colors);
+    },
 
-	addcolor: function(color) {
+    addcolor: function(color) {
 
-		var colorUpCase = color.toUpperCase();
-		// Dostawienie nowego koloru do tablicy colors
-		this._colors.push({
-			color: colorUpCase
-		});
+        var colorUpCase = color.toUpperCase();
+        // Dostawienie nowego koloru do tablicy colors
+        this._colors.push({
+            color: colorUpCase
+        });
 
-		// Wysłanie powiadomienia do Widoku, że został dodany nowy kolor
-		this.colorAdded.notify({
-			color: color // Opcjonalne
-		});
-	},
+        // Wysłanie powiadomienia do Widoku, że został dodany nowy kolor
+        this.colorAdded.notify({
+            color: color // Opcjonalne
+        });
+    },
 
     removeColorAt: function(index) {
         var color;
@@ -63,15 +63,28 @@ ListModel.prototype = {
         this.setSelectedIndex(-1);
     },
 
-	getSelectedIndex: function() {
+    addEditcolor: function(color, index) {
 
-		// Zwrócenie aktywnego indkesu elementu z kolorem
-		return this._selectedIndex;
-	},
+        var colorUpCase = color.toUpperCase();
 
-	setSelectedIndex: function(index) {
+        // Przypisanie nowego koloru 
+        this._colors[index].color = colorUpCase;
 
-		// Ustawienie aktywnego indeksu elementu z kolorem
-		this._selectedIndex = index;
-	}
+        // Wysłanie powiadomienia do Widoku, że został dodany zedytowany kolor
+        this.colorAdded.notify({
+            color: color // Opcjonalne
+        });
+    },
+
+    getSelectedIndex: function() {
+
+        // Zwrócenie aktywnego indkesu elementu z kolorem
+        return this._selectedIndex;
+    },
+
+    setSelectedIndex: function(index) {
+
+        // Ustawienie aktywnego indeksu elementu z kolorem
+        this._selectedIndex = index;
+    }
 }
